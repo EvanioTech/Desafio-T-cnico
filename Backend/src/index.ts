@@ -8,7 +8,7 @@ const app = express()
 app.use(express.json())
 
 
-app.get('/', (req, res) => {
+app.get('/', (req : Request, res: Response) => {
   res.json({ message: 'funcionando' })
 })
 
