@@ -1,6 +1,9 @@
 import 'dotenv/config'
 import express, { type Request, type Response} from 'express'
 import { supabase } from './database/supabase.js'
+import cors from 'cors'
+
+
 
 
 
@@ -8,6 +11,8 @@ import { supabase } from './database/supabase.js'
 const app = express()
 
 app.use(express.json())
+
+app.use(cors())
 
 
 app.get('/tarefas', async (req : Request, res: Response) => {
