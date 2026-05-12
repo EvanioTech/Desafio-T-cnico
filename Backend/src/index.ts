@@ -1,7 +1,7 @@
-import express, {Request, Response} from 'express'
+import express, { type Request, type Response} from 'express'
 
 
-const port = 3000
+
 
 const app = express()
 
@@ -12,6 +12,6 @@ app.get('/', (req : Request, res: Response) => {
   res.json({ message: 'funcionando' })
 })
 
-app.listen(port, () => {
+app.listen(process.env.PORT!, () => {
   console.log(`Servidor Funcionando!!!`)
 })
