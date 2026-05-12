@@ -16,7 +16,21 @@ app.get('/tarefas', async (req : Request, res: Response) => {
   .select('*')
 
   if (error) return res.status(500).json({error})
-    res.json(data)
+    res.status(200).json(data)
+})
+
+app.post('/tarefas', async (req: Request, res: Response) => {
+  const {titulo, descricao} = req.body
+
+  const {data, error} = await supabase
+  .from('tarefas')
+  .insert({titulo, descricao})
+  .select()
+
+  if (error) return res.status(500).json({ error})
+    res.status(201).json(data)
+
+
 })
 
 app.listen(process.env.PORT!, () => {
