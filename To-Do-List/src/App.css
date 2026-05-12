@@ -1,0 +1,23 @@
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    
+    
+}
+
+.box {
+    display: flex;
+    background-color: brown;
+    justify-content: center;
+    width: 50%;
+    height: 50vh;
+    border-width: 2px;
+    border-color: black;
+    border-radius: 10px;
+}
+
+h1{
+    
+}

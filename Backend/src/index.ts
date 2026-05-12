@@ -60,6 +60,20 @@ app.put('/tarefas/:id', async (req: Request, res: Response) => {
     res.status(200).json(data)
 })
 
+app.delete('/tarefas/:id', async (req: Request, res: Response) => {
+  const {id} = req.params
+  
+
+  const {data, error} = await supabase
+  .from('tarefas')
+  .delete()
+  .eq('id', id)
+  .select()
+
+  if(error) return res.status(500).json({error})
+    res.status(200).json(data)
+})
+
 
 
 app.listen(process.env.PORT!, () => {
