@@ -1,7 +1,19 @@
 import './App.css'
 import { useState, useEffect } from 'react'
 
+
+
 function App() {
+
+  type Tarefa = {
+  id: string
+  titulo: string
+  descricao: string
+  status: string
+  created_at: string
+}
+
+
   const [tarefas, setTarefas] = useState([])
 
   useEffect(() => {
@@ -28,6 +40,12 @@ function App() {
         <input type="text" placeholder='Digite sua dewscrição...' className='textInput'/>
         </div>
         <button>Adicionar</button>
+        {tarefas.map((tarefa: Tarefa) => (
+  <div key={tarefa.id}>
+    <p>{tarefa.titulo}</p>
+    <p>{tarefa.descricao}</p>
+  </div>
+))}
       </div>
       </div>
     
