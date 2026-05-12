@@ -15,31 +15,42 @@ function App() {
 
 
   const [tarefas, setTarefas] = useState([])
+  const [titulo, setTitulo] = useState('')
+  const [descricao, setDescricao] = useState('')
 
-  useEffect(() => {
-    fetch('http://localhost:3000/tarefas')
-    .then(res => res.json())
-    .then(data => {
-      console.log(data)
-      setTarefas(data)
+  const criarTarefa = async () => {
+    await fetch('http://localhost:3000/tarefas', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json'},
+      body: JSON.stringify({ titulo, descricao})
     })
-    
-  }, [])
-  
+  }
+
+  const buscarTarefas = () => {
+  fetch('http://localhost:3000/tarefas')
+    .then(res => res.json())
+    .then(data => setTarefas(data))
+}
+
+useEffect(() => {
+  buscarTarefas()
+}, [])
+
+
 
   return (
     <div className='container'>
       <div className='box'>
         <h1>TAREFAS</h1>
         <div className='typeTask'>
-        <p>Adicione sua tarefa:</p>
-        <input type="text" placeholder='Digite sua tarefa...' className='textInput'/>
+        <p>Adicione o titulo:</p>
+        <input type="text" placeholder='Digite sua tarefa...' className='textInput' onChange={(event)=> setTitulo(event.target.value)}/>
         </div>
         <div className='typeTask'>
         <p>Adicione sua decrição:</p>
-        <input type="text" placeholder='Digite sua dewscrição...' className='textInput'/>
+        <input type="text" placeholder='Digite sua dewscrição...' className='textInput' onChange={(event)=> setTitulo(event.target.value)}/>
         </div>
-        <button>Adicionar</button>
+        <button onClick={criarTarefa}>Adicionar</button>
         {tarefas.map((tarefa: Tarefa) => (
   <div key={tarefa.id}>
     <p>{tarefa.titulo}</p>
