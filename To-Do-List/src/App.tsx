@@ -1,4 +1,3 @@
-import './App.css'
 import { useState, useEffect } from 'react'
 
 
@@ -14,9 +13,10 @@ function App() {
 }
 
 
-  const [tarefas, setTarefas] = useState([])
+  const [tarefas, setTarefas] = useState<Tarefa[]>([])
   const [titulo, setTitulo] = useState('')
   const [descricao, setDescricao] = useState('')
+  const [carregando, setCarregando] = useState(false)
 
   const criarTarefa = async () => {
     await fetch('http://localhost:3000/tarefas', {
@@ -24,13 +24,21 @@ function App() {
       headers: { 'Content-Type': 'application/json'},
       body: JSON.stringify({ titulo, descricao})
     })
+
+    setTitulo('')
+    setDescricao('')
+    buscarTarefas()
   }
 
-  const buscarTarefas = () => {
-  fetch('http://localhost:3000/tarefas')
-    .then(res => res.json())
-    .then(data => setTarefas(data))
-}
+  const buscarTarefas = async () => {
+    setCarregando(true)
+
+    const resposta = await fetch('http://localhost:3000/tarefas')
+    const data = await resposta.json()
+
+    setTarefas(data)
+    setCarregando(false)
+  }
 
 useEffect(() => {
   buscarTarefas()
@@ -39,25 +47,64 @@ useEffect(() => {
 
 
   return (
-    <div className='container'>
-      <div className='box'>
-        <h1>TAREFAS</h1>
-        <div className='typeTask'>
-        <p>Adicione o titulo:</p>
-        <input type="text" placeholder='Digite sua tarefa...' className='textInput' onChange={(event)=> setTitulo(event.target.value)}/>
-        </div>
-        <div className='typeTask'>
-        <p>Adicione sua decrição:</p>
-        <input type="text" placeholder='Digite sua dewscrição...' className='textInput' onChange={(event)=> setTitulo(event.target.value)}/>
-        </div>
-        <button onClick={criarTarefa}>Adicionar</button>
-        {tarefas.map((tarefa: Tarefa) => (
-  <div key={tarefa.id}>
-    <p>{tarefa.titulo}</p>
-    <p>{tarefa.descricao}</p>
-  </div>
-))}
-      </div>
+    <div className='app'>
+      <main className='layout'>
+        <section className='panel panel-lista'>
+          <div className='panel-header'>
+            <h1>Minhas tarefas</h1>
+            <p>Veja aqui tudo que você já cadastrou.</p>
+          </div>
+
+          {carregando ? (
+            <p className='empty-state'>Carregando tarefas...</p>
+          ) : tarefas.length === 0 ? (
+            <p className='empty-state'>Nenhuma tarefa cadastrada ainda.</p>
+          ) : (
+            <div className='task-list'>
+              {tarefas.map((tarefa) => (
+                <article key={tarefa.id} className='task-card'>
+                  <h2>{tarefa.titulo}</h2>
+                  <p>{tarefa.descricao}</p>
+                  <span className='task-status'>{tarefa.status}</span>
+                </article>
+              ))}
+            </div>
+          )}
+        </section>
+
+        <section className='panel panel-form'>
+          <div className='panel-header'>
+            <h1>Adicionar tarefa</h1>
+            <p>Preencha o formulário para criar uma nova tarefa.</p>
+          </div>
+
+          <div className='form-row'>
+            <label htmlFor='titulo'>Título</label>
+            <input
+              id='titulo'
+              type='text'
+              placeholder='Digite sua tarefa...'
+              className='textInput'
+              value={titulo}
+              onChange={(event) => setTitulo(event.target.value)}
+            />
+          </div>
+
+          <div className='form-row'>
+            <label htmlFor='descricao'>Descrição</label>
+            <input
+              id='descricao'
+              type='text'
+              placeholder='Digite sua descrição...'
+              className='textInput'
+              value={descricao}
+              onChange={(event) => setDescricao(event.target.value)}
+            />
+          </div>
+
+          <button onClick={criarTarefa} className='btn'>Adicionar</button>
+        </section>
+      </main>
       </div>
     
   )
