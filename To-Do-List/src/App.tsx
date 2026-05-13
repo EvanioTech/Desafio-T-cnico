@@ -17,6 +17,9 @@ function App() {
   const [titulo, setTitulo] = useState('')
   const [descricao, setDescricao] = useState('')
   const [carregando, setCarregando] = useState(false)
+  const [editandoId, setEditandoId] = useState<string | null>(null)
+  const [tituloEdit, setTituloEdit] = useState('')
+  const [descricaoEdit, setDescricaoEdit] = useState('')
 
   const criarTarefa = async () => {
     await fetch('http://localhost:3000/tarefas', {
@@ -54,6 +57,35 @@ function App() {
     buscarTarefas()
   }
 
+  const editarTarefa = async (id: string, titulo: string, descricao: string) => {
+    await fetch(`http://localhost:3000/tarefas/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json'},
+      body: JSON.stringify({ titulo, descricao })
+    })
+
+    setEditandoId(null)
+    buscarTarefas()
+  }
+
+  const iniciarEdicao = (tarefa: Tarefa) => {
+    setEditandoId(tarefa.id)
+    setTituloEdit(tarefa.titulo)
+    setDescricaoEdit(tarefa.descricao)
+  }
+
+  const cancelarEdicao = () => {
+    setEditandoId(null)
+    setTituloEdit('')
+    setDescricaoEdit('')
+  }
+
+  const salvarEdicao = () => {
+    if (editandoId) {
+      editarTarefa(editandoId, tituloEdit, descricaoEdit)
+    }
+  }
+
   const buscarTarefas = async () => {
     setCarregando(true)
 
@@ -86,17 +118,47 @@ useEffect(() => {
           ) : (
             <div className='task-list'>
               {tarefas.map((tarefa) => (
-                <article key={tarefa.id} className='task-card'>
-                  <h2>{tarefa.titulo}</h2>
-                  <p>{tarefa.descricao}</p>
-                  <span className='task-status'>{tarefa.status}</span>
-                  <div className='task-buttons'>
-                    <button onClick={() => atualizarStatusTarefa(tarefa.id, tarefa.status)} className='btn btn-status'>
-                      {tarefa.status === 'pendente' ? 'Marcar como concluída' : 'Marcar como pendente'}
-                    </button>
-                    <button onClick={() => deletarTarefa(tarefa.id)} className='btn btn-delete'>Deletar</button>
-                  </div>
-                </article>
+                editandoId === tarefa.id ? (
+                  <article key={tarefa.id} className='task-card task-card-edit'>
+                    <div className='form-row'>
+                      <label htmlFor={`titulo-edit-${tarefa.id}`}>Título</label>
+                      <input
+                        id={`titulo-edit-${tarefa.id}`}
+                        type='text'
+                        className='textInput'
+                        value={tituloEdit}
+                        onChange={(e) => setTituloEdit(e.target.value)}
+                      />
+                    </div>
+                    <div className='form-row'>
+                      <label htmlFor={`desc-edit-${tarefa.id}`}>Descrição</label>
+                      <input
+                        id={`desc-edit-${tarefa.id}`}
+                        type='text'
+                        className='textInput'
+                        value={descricaoEdit}
+                        onChange={(e) => setDescricaoEdit(e.target.value)}
+                      />
+                    </div>
+                    <div className='task-buttons'>
+                      <button onClick={salvarEdicao} className='btn btn-save'>Salvar</button>
+                      <button onClick={cancelarEdicao} className='btn btn-cancel'>Cancelar</button>
+                    </div>
+                  </article>
+                ) : (
+                  <article key={tarefa.id} className='task-card'>
+                    <h2>{tarefa.titulo}</h2>
+                    <p>{tarefa.descricao}</p>
+                    <span className='task-status'>{tarefa.status}</span>
+                    <div className='task-buttons'>
+                      <button onClick={() => iniciarEdicao(tarefa)} className='btn btn-edit'>Editar</button>
+                      <button onClick={() => atualizarStatusTarefa(tarefa.id, tarefa.status)} className='btn btn-status'>
+                        {tarefa.status === 'pendente' ? 'Marcar como concluída' : 'Marcar como pendente'}
+                      </button>
+                      <button onClick={() => deletarTarefa(tarefa.id)} className='btn btn-delete'>Deletar</button>
+                    </div>
+                  </article>
+                )
               ))}
             </div>
           )}
