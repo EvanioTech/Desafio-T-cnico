@@ -30,6 +30,14 @@ function App() {
     buscarTarefas()
   }
 
+  const deletarTarefa = async (id: string) => {
+    await fetch(`http://localhost:3000/tarefas/${id}`, {
+      method: 'DELETE'
+    })
+
+    buscarTarefas()
+  }
+
   const buscarTarefas = async () => {
     setCarregando(true)
 
@@ -66,6 +74,7 @@ useEffect(() => {
                   <h2>{tarefa.titulo}</h2>
                   <p>{tarefa.descricao}</p>
                   <span className='task-status'>{tarefa.status}</span>
+                  <button onClick={() => deletarTarefa(tarefa.id)} className='btn btn-delete'>Deletar</button>
                 </article>
               ))}
             </div>

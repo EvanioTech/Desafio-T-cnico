@@ -145,6 +145,11 @@ body {
   box-shadow: 0 12px 24px rgba(14, 165, 233, 0.24);
 }
 
+.btn.btn-delete {
+  background: linear-gradient(135deg, #ef4444, #b91c1c);
+  box-shadow: 0 12px 24px rgba(239, 68, 68, 0.24);
+}
+
 .btn:hover {
   transform: translateY(-1px);
 }
