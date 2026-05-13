@@ -44,15 +44,18 @@ body {
   border-radius: 24px;
   box-shadow: var(--shadow);
   padding: 28px;
+  
 }
 
 .panel-header {
   margin-bottom: 24px;
+  
 }
 
 .panel-header h1 {
   margin: 0 0 8px;
   font-size: 1.8rem;
+  
 }
 
 .panel-header p {
@@ -63,11 +66,13 @@ body {
 .panel-lista {
   display: flex;
   flex-direction: column;
+  
 }
 
 .task-list {
   display: grid;
   gap: 16px;
+  
 }
 
 .task-card {
@@ -75,11 +80,13 @@ body {
   border: 1px solid var(--border);
   border-radius: 18px;
   padding: 18px;
+  
 }
 
 .task-card h2 {
   margin: 0 0 8px;
   font-size: 1.05rem;
+  
 }
 
 .task-card p {
@@ -98,12 +105,27 @@ body {
   font-size: 0.85rem;
   font-weight: 600;
   text-transform: capitalize;
+  margin-bottom: 12px;
+}
+
+.task-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 12px;
 }
 
 .panel-form {
   display: flex;
   flex-direction: column;
   gap: 18px;
+}
+
+.panel-form .btn {
+  padding: 10px 14px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  flex: none;
+  align-self: flex-start;
 }
 
 .form-row {
@@ -135,19 +157,26 @@ body {
 .btn {
   border: none;
   border-radius: 14px;
-  padding: 14px 18px;
+  padding: 10px 14px;
   background: linear-gradient(135deg, var(--primary), var(--primary-dark));
   color: white;
-  font-size: 1rem;
-  font-weight: 700;
+  font-size: 0.95rem;
+  font-weight: 600;
   cursor: pointer;
   transition: transform 0.15s ease, box-shadow 0.15s ease;
   box-shadow: 0 12px 24px rgba(14, 165, 233, 0.24);
+  flex: 1;
+  min-height: 36px;
 }
 
 .btn.btn-delete {
   background: linear-gradient(135deg, #ef4444, #b91c1c);
   box-shadow: 0 12px 24px rgba(239, 68, 68, 0.24);
+}
+
+.btn.btn-status {
+  background: linear-gradient(135deg, #10b981, #047857);
+  box-shadow: 0 12px 24px rgba(16, 185, 129, 0.24);
 }
 
 .btn:hover {

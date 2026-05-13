@@ -90,10 +90,12 @@ useEffect(() => {
                   <h2>{tarefa.titulo}</h2>
                   <p>{tarefa.descricao}</p>
                   <span className='task-status'>{tarefa.status}</span>
-                  <button onClick={() => atualizarStatusTarefa(tarefa.id, tarefa.status)} className='btn btn-status'>
-                    {tarefa.status === 'pendente' ? 'Marcar como concluída' : 'Marcar como pendente'}
-                  </button>
-                  <button onClick={() => deletarTarefa(tarefa.id)} className='btn btn-delete'>Deletar</button>
+                  <div className='task-buttons'>
+                    <button onClick={() => atualizarStatusTarefa(tarefa.id, tarefa.status)} className='btn btn-status'>
+                      {tarefa.status === 'pendente' ? 'Marcar como concluída' : 'Marcar como pendente'}
+                    </button>
+                    <button onClick={() => deletarTarefa(tarefa.id)} className='btn btn-delete'>Deletar</button>
+                  </div>
                 </article>
               ))}
             </div>
