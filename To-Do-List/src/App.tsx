@@ -38,6 +38,22 @@ function App() {
     buscarTarefas()
   }
 
+  
+
+  
+
+  const atualizarStatusTarefa = async (id: string, status: string) => {
+    const novoStatus = status === 'pendente' ? 'concluída' : 'pendente'
+
+    await fetch(`http://localhost:3000/tarefas/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json'},
+      body: JSON.stringify({ status: novoStatus })
+    })
+
+    buscarTarefas()
+  }
+
   const buscarTarefas = async () => {
     setCarregando(true)
 
@@ -74,6 +90,9 @@ useEffect(() => {
                   <h2>{tarefa.titulo}</h2>
                   <p>{tarefa.descricao}</p>
                   <span className='task-status'>{tarefa.status}</span>
+                  <button onClick={() => atualizarStatusTarefa(tarefa.id, tarefa.status)} className='btn btn-status'>
+                    {tarefa.status === 'pendente' ? 'Marcar como concluída' : 'Marcar como pendente'}
+                  </button>
                   <button onClick={() => deletarTarefa(tarefa.id)} className='btn btn-delete'>Deletar</button>
                 </article>
               ))}
