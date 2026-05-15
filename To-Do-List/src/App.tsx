@@ -19,7 +19,7 @@ function App() {
     alert('O título e a descrição são obrigatórios!')
     return
   }
-  await fetch('http://localhost:3000/tarefas', {
+  await fetch(`${import.meta.env.VITE_API_URL}/tarefas`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ titulo, descricao })
@@ -28,7 +28,7 @@ function App() {
 }
 
   const deletarTarefa = async (id: string) => {
-    await fetch(`http://localhost:3000/tarefas/${id}`, {
+    await fetch(`${import.meta.env.VITE_API_URL}/tarefas/${id}`, {
       method: 'DELETE'
     })
 
@@ -39,7 +39,7 @@ function App() {
   const atualizarStatusTarefa = async (id: string, status: string) => {
     const novoStatus = status === 'pendente' ? 'concluída' : 'pendente'
 
-    await fetch(`http://localhost:3000/tarefas/${id}`, {
+    await fetch(`${import.meta.env.VITE_API_URL}/tarefas/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json'},
       body: JSON.stringify({ status: novoStatus })
@@ -49,7 +49,7 @@ function App() {
   }
 
   const editarTarefa = async (id: string, titulo: string, descricao: string) => {
-    await fetch(`http://localhost:3000/tarefas/${id}`, {
+    await fetch(`${import.meta.env.VITE_API_URL}/tarefas/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json'},
       body: JSON.stringify({ titulo, descricao })
@@ -80,7 +80,7 @@ function App() {
   const buscarTarefas = async () => {
     setCarregando(true)
 
-    const resposta = await fetch('http://localhost:3000/tarefas')
+    const resposta = await fetch(`${import.meta.env.VITE_API_URL}/tarefas`)
     const data = await resposta.json()
 
     setTarefas(data)
