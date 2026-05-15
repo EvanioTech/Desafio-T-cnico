@@ -1,16 +1,9 @@
 import { useState, useEffect } from 'react'
+import { Tarefa } from './types/tarefas'
 
 
 
 function App() {
-
-  type Tarefa = {
-  id: string
-  titulo: string
-  descricao: string
-  status: string
-  created_at: string
-}
 
 
   const [tarefas, setTarefas] = useState<Tarefa[]>([])
@@ -22,6 +15,11 @@ function App() {
   const [descricaoEdit, setDescricaoEdit] = useState('')
 
   const criarTarefa = async () => {
+
+    if (!titulo.trim() || !descricao.trim()) {
+      alert('O título e a descrição são obrigatórios!')
+      return
+    }
     await fetch('http://localhost:3000/tarefas', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json'},
