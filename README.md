@@ -91,4 +91,10 @@ Cada tarefa possui os campos:
 
 O campo `status` trabalha com os valores `pendente` e `concluída`.
 
-Link do deploy https://desafio-t-cnico-gamma.vercel.app/
+## Deploy
+
+- Frontend: https://desafio-t-cnico-gamma.vercel.app/
+- Backend: ## Deploy
+
+- Frontend: https://desafio-t-cnico-gamma.vercel.app/
+- Backend: https://desafio-t-cnico.onrender.com
