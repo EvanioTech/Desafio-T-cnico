@@ -94,7 +94,4 @@ O campo `status` trabalha com os valores `pendente` e `concluída`.
 ## Deploy
 
 - Frontend: https://desafio-t-cnico-gamma.vercel.app/
-- Backend: ## Deploy
-
-- Frontend: https://desafio-t-cnico-gamma.vercel.app/
 - Backend: https://desafio-t-cnico.onrender.com
